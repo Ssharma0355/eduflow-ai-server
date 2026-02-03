@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, Literal
 
 class SignupRequest(BaseModel):
@@ -10,7 +10,11 @@ class UserResponse(BaseModel):
     id: str
     full_name: str
     email: EmailStr
-    role: Optional[Literal["CLIENT", "EXPERT"]]
+    role: Optional[Literal["CLIENT", "EXPERT"]] = None # Allow None for new users
+    emailverified: bool = False # <--- ADD THIS FIELD
 
 class RoleUpdateRequest(BaseModel):
     role: Literal["CLIENT", "EXPERT"]
+
+class VerifyOTPRequest(BaseModel):
+    otp: str
